@@ -18,8 +18,8 @@ type Response struct {
 	Host       string            `json:"host"`
 	Metas      map[string]string `json:"metas"`
 	Proto      string            `json:"protocol"`
-	StatusCode int               `json:"status_code"`
-	StatusText string            `json:"status_text"`
+	StatusCode int               `json:"statusCode"`
+	StatusText string            `json:"statusText"`
 	Success    bool              `json:"success"`
 	Title      string            `json:"title"`
 	URL        string            `json:"url"`
@@ -96,7 +96,9 @@ func getTags(reader io.Reader) (string, map[string]string, error) {
 					val = v.Val
 				}
 			}
-			metas[key] = val
+			if key != "" && val != "" {
+				metas[key] = val
+			}
 		}
 	}
 	return title, metas, nil
