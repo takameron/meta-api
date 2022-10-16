@@ -1,6 +1,6 @@
 module github.com/takameron/meta-api
 
-go 1.19
+go 1.18
 
 require (
 	github.com/mattn/go-encoding v0.0.2
