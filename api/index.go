@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/mattn/go-encoding"
@@ -128,8 +129,23 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// request
-	url := queries.Get("url")
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	requestURL := queries.Get("url")
+
+	// add scheme
+	u, err := url.Parse(requestURL)
+	if err != nil {
+		w.WriteHeader(400)
+		w.Write([]byte("400 Bad Request\n"))
+		data := ResponseError{Success: false, Msg: "can not parse url"}
+		msg, _ := json.Marshal(data)
+		fmt.Fprintf(w, string(msg))
+		return
+	}
+	if (len(u.Scheme) == 0) {
+		requestURL = "http://" + requestURL
+	}
+
+	req, err := http.NewRequest(http.MethodGet, requestURL, nil)
 	if err != nil {
 		log.Fatalf("error request HTML: %v", err)
 		w.WriteHeader(500)
