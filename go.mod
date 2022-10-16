@@ -1,9 +1,10 @@
 module github.com/takameron/meta-api
 
-go 1.16
+go 1.19
 
 require (
 	github.com/mattn/go-encoding v0.0.2
-	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b
 )
+
+require golang.org/x/text v0.3.8 // indirect
